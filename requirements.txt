@@ -5,4 +5,5 @@ python-decouple
 psycopg2-binary
 pillow
 drf-yasg
+django-filter
 

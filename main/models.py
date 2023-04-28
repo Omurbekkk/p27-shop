@@ -10,3 +10,10 @@ class Product(models.Model):
     description = models.TextField()
     quantity = models.IntegerField()
 
+    @property
+    def average_rating(self):
+        ratings = self.ratings.all()
+        if ratings.exists():
+            return sum([x.value for x in ratings]) // ratings.count()
+        return 0
+

@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from drf_yasg.utils import swagger_auto_schema
 from .models import Comment, Rating, Favourite
 from .serializers import CommentSerializer, RatingSerializer, FavouriteSerializer
+from .permissions import IsAuthor
 
 
 class CommentViewSet(mixins.CreateModelMixin,
@@ -14,7 +15,7 @@ class CommentViewSet(mixins.CreateModelMixin,
                      GenericViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAuthor]
 
 
 class FavouriteViewSet(mixins.CreateModelMixin,
@@ -23,7 +24,10 @@ class FavouriteViewSet(mixins.CreateModelMixin,
                        GenericViewSet):
     queryset = Favourite.objects.all()
     serializer_class = FavouriteSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAuthor]
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
 
 
 class AddRatingAPIView(APIView):
