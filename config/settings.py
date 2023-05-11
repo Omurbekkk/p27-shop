@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*').split()
 
 
 # Application definition
@@ -180,4 +180,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 ACTIVATE_USERS_EMAIL = True
 EMAIL_USE_SSL = False
+
 
